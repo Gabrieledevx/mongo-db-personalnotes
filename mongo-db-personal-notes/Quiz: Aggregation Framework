@@ -1,0 +1,25 @@
+Quiz: Aggregation Framework
+
+aggregate() can do what find() can and more.
+
+This is correct.
+
+Any find() query can be translated into an aggregation pipeline equivalent, but not every aggregation pipeline can be translated into a find() query.
+
+find() can do what the aggregate() can do and more.
+
+This is incorrect.
+
+Any find() query can be translated into an aggregation pipeline equivalent, but not every aggregation pipeline can be translated into a find() query.
+
+find() allows us to compute and reshape data in the cursor.
+
+This is incorrect.
+
+This is incorrect, the only way for us to compute and reshape data using find(), is by using the aggregation framework stages within the find() method.
+
+aggregate() allows us to compute and reshape data in the cursor.
+
+This is correct.
+
+The aggregation framework allows us to compute and reshape data via using stages like $group, $sum, and others.

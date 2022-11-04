@@ -1,0 +1,49 @@
+>Target: MongoDB
+
+
+>>Topic: Inserting New Documents - insert() order
+
+Insert multiple documents by using an array:
+db.collection.insert([{<doc1>},{<doc2>}])
+
+Use {"ordered": false} to disable the default ordered insert
+
+Collections and databases are created when they are being used:
+use tools followeb by db.tractors.insert({<tractor doc>})
+Creates the tools.tractors namespace.
+
+
+Example Commands:
+
+>Insert three test documents:
+db.inspections.insert([ { "test": 1 }, { "test": 2 }, { "test": 3 } ])
+
+>Insert three test documents but specify the _id values:
+db.inspections.insert([{ "_id": 1, "test": 1 },{ "_id": 1, "test": 2 },
+                       { "_id": 3, "test": 3 }])
+
+>Find the documents with _id: 1
+
+db.inspections.find({ "_id": 1 })
+
+>Insert multiple documents specifying the _id values, and using the "ordered": false option.
+
+db.inspections.insert([{ "_id": 1, "test": 1 },{ "_id": 1, "test": 2 },
+                       { "_id": 3, "test": 3 }],{ "ordered": false })
+                       
+>Insert multiple documents with _id: 1 with the default "ordered": true setting
+
+db.inspection.insert([{ "_id": 1, "test": 1 },{ "_id": 3, "test": 3 }])
+
+>View collections in the active db
+
+show collections
+
+>Switch the active db to training
+use training
+
+View all available databases
+
+show dbs
+
+

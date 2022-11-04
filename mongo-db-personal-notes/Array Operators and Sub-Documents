@@ -1,0 +1,75 @@
+>Target: MongoDB
+
+
+>>Topic: Array Operators and Sub-Documents
+
+
+MQL uses dot-notation in arrays specify the address of nested elements in a document.
+To use dot-notation in arrays specify the position of the element in the array.
+
+Example:
+
+db.collection.find({"field1.other field. also a field":"value"})
+
+
+Check $regex operator. 
+
+Link of oficial documentations: https://www.mongodb.com/docs/manual/tutorial/query-arrays/
+
+
+-- Lab1: Querying arrays and sub-documents -- 
+
+Example
+
+{"_id":{"$oid":"572bb8222b288919b68abf5e"},"tripduration":{"$numberInt":"332"},"start station id":{"$numberInt":"3104"},"start station name":"Kent Ave & N 7 St","end station id":{"$numberInt":"389"},"end station name":"Broadway & Berry St","bikeid":{"$numberInt":"15788"},"usertype":"Subscriber","birth year":{"$numberInt":"1984"},
+
+"start station location":{"type":"Point","coordinates":
+[{"$numberDouble":"-73.96150225"},{"$numberDouble":"40.72057658"}]},
+
+
+"end station location":{"type":"Point","coordinates":[{"$numberDouble":"-73.96525063"},{"$numberDouble":"40.71044554"}]},"start time":{"$date":{"$numberLong":"1451606479000"}},"stop time":{"$date":{"$numberLong":"1451606811000"}}}
+
+
+
+Lab 1 - Chapter 4 Answer use the dot notation at MQL
+
+Lab 2 
+
+> db.inspections.find()
+
+{
+    _id: ObjectId("56d61033a378eccde8a8358d"),
+    id: '11815-2015-ENFO',
+    certificate_number: 3019426,
+    business_name: 'WILFREDO DELIVERY SERVICE INC',
+    date: 'Mar 10 2015',
+    result: 'Pass',
+    sector: 'Fuel Oil Dealer - 814',
+    address: {
+      city: 'WADING RIVER',
+      zip: 11792,
+      street: 'WADING RIVER MANOR RD',
+      number: 1607
+    }
+  }
+
+Example dot notation:
+
+db.collection.find({"field1.other field. also a field":"value"})
+
+db.inspections.find({"address.city": "NEW YORK"}).count()
+
+Note: Dot notations must be have into query or queries but doesn't use in other side.
+
+Note 2: When we use the dot notation. We should use the classic array number to navigate into the array.
+Example
+If you trying to navigate at the position 989 you use 
+
+db.collection.find({subdocument.989: "argument"}).count()
+
+
+
+
+
+
+

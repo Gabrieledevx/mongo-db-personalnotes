@@ -1,0 +1,11 @@
+>Target: MongoDB
+
+
+>>Topic: "Data Explorer"
+
+ALTAS ui provides us with DATA Explorer so that we can query data using the GUI.
+
+Queries must use valid JSON.
+
+Returned documents will contain the requested field:value pairs in them.
+

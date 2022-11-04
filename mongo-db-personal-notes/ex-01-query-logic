@@ -1,0 +1,50 @@
+v.fail.1.0
+
+db.companies.find({"founded_year": 2004},{"$and":[{"category_code": "social"},{"category_code": "web"}]})
+
+v.fail.2.0
+
+db.companies.find({"$or":[{{"founder_year": 2004},{"$and":[{"category_code":"social"},{"category_code": "web"}]}},{{"founded_month": 10},{"$and":[{"category_code": "social"},{"category_code": "web"}]}}]})
+
+
+rebuild
+Requisitos
+
+fundado en 2004 
+	y que tenga category_code = social or category_code = web
+
+o fundado en octubre 
+	Y que tenga category_code = social or category_code = web
+	
+	
+	
+	.count()
+
+
+v.1.0
+
+
+
+db.companies.find({ "$or": [{"founded_year": 2004},{"founded_month":10}]})
+
+
+db.companies.find({ "$and": [{ "$or": [{"founded_year": 2004},{"founded_month":10}]},{"$and": [{"category_code": "social"},{"category_code": "web"}]}]}).count()
+
+----
+
+db.companies.find({"$or": [ { "$and":[{"founded_year":2004},{ "$or":[{ "category_code": "social"  },{"category_code": "web"}]}]} , {"$and":[{},{}]}   ]})
+
+Requisitos
+
+fundado en 2004 
+	y que tenga category_code = social or category_code = web
+
+o fundado en octubre 
+	Y que tenga category_code = social or category_code = web
+->
+
+db.companies.find({"$or": [ { "$and":[{"founded_year":2004},{ "$or":[{ "category_code": "social"  },{"category_code": "web"}]}]} , { "$and":[{"founded_month":10},{ "$or":[{ "category_code": "social"  },{"category_code": "web"}]}]}]})	
+	
+
+
+

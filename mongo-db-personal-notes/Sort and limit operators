@@ -1,0 +1,80 @@
+>Target: MongoDB
+
+
+>>Topic: sort and limit()
+
+>>>> SORT <<<<
+
+If the query bar displays the Sort option, you can specify the sort order of the returned documents.
+
+Set the Sort Order
+To set the sort order:
+
+1. In the Query Bar, click Options.
+
+2. Enter the sort document into the Sort field.
+
+	To specify ascending order for a field, set the field to 1 in the sort document.
+
+	To specify descending order for a field, set the field and -1 in the sort documents.
+
+As you type, the Find button is disabled and the Sort label turns red until a valid query is entered.
+
+
+3. Click Find to run the query and view the updated results.
+
+
+>>> LIMIT <<<
+
+Note: Starting in MongoDB 5.0, the 
+$limit pipeline aggregation has a 64-bit integer limit. Values passed to the pipeline which exceed this limit will return a invalid argument error.
+ 
+
+Limits the number of documents passed to the next stage in the pipeline.
+
+The $limit stage has the following prototype form:
+	{ $limit: <positive 64-bit integer> }
+	
+$limit  takes a positive integer that specifies the maximum number of documents to pass along.
+
+
+Using $limit with Sorted Results
+
+If using the $limit stage with any of:
+	>the $sort aggregation stage
+	>the sort() method
+	>the sort field to the findAndModify command or the findAndModify() shell method.
+
+Be sure to include at least one field in your sort that contains unique values, before passing results to the $limit stage.
+
+Example
+
+db.article.aggregate([
+   { $limit : 5 }
+]);
+
+This operation returns only the first 5 documents passed to it by the pipeline. 
+$limit has no effect on the content of the documents it passes.
+
+
+Note 2: 
+
+When a $sort precedes a 
+$limit
+
+ and there are no intervening stages that modify the number of documents, the optimizer can coalesce the 
+$limit
+
+ into the $sort. This allows the $sort operation to only maintain the top n results as it progresses, where n is the specified limit, and ensures that MongoDB only needs to store n items in memory. This optimization still applies when allowDiskUse is true and the n items exceed the aggregation memory limit.
+
+
+
+	
+	
+
+
+
+
+
+
+

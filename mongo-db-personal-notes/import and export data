@@ -1,0 +1,51 @@
+>Target: MongoDB
+
+
+>>Topic: "Import" and "Export" Data 
+
+>>>Commands
+
+####Basic
+
+You must to use an URI STRING to make some request.
+
+URI: Uniform Resource Identifier
+srv- establishes a secure connection
+
+example:
+mongodb+srv://user:password@clusterURI.mongodb.net/database
+
+
+#JSON
+
+> mongoimport
+
+> mongoexport --uri "<ATLAS CLUSTER URI>"
+ 	      --collection=<collection name>
+  	      --out=<filename>.json
+Exports data in JSON
+
+
+#BSON
+> mongorestore
+
+> mongodump --uri "<ATLAS CLUSTER URI>"
+Exports data in BSON
+
+Hint: 
+
+--drop dump
+
+Use to delete if the database have an instance in the database.
+
+
+
+>>Examples
+
+mongodump --uri "mongodb+srv://<your username>:<your password>@<your cluster>.mongodb.net/sample_supplies"
+
+mongoexport --uri="mongodb+srv://<your username>:<your password>@<your cluster>.mongodb.net/sample_supplies" --collection=sales --out=sales.json
+
+mongorestore --uri "mongodb+srv://<your username>:<your password>@<your cluster>.mongodb.net/sample_supplies"  --drop dump
+
+mongoimport --uri="mongodb+srv://<your username>:<your password>@<your cluster>.mongodb.net/sample_supplies" --drop sales.json

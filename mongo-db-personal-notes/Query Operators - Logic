@@ -1,0 +1,79 @@
+>Target: MongoDB
+
+
+>>Topic: Query Operators - Logic
+
+Logic Operators
+
+$and Match all of the specified query clauses.
+$or  At least one of the query clauses is matched.
+$nor Fail to match both given clauses.
+$not Negates the query requirement.
+
+
+Note: $and is used as the default operator when an operator is not specified.
+
+
+Sintax
+For [$and - $or - $nor]
+
+{<operator> :[{statement1},{statement2},...] }
+
+For [ $not ]
+
+{$not: {statement}}
+
+
+Implicit $and
+
+{sector: "Mobile Food Vendor - 881", result: "Warning"}
+
+Is the same as: 
+{"$and": [{sector: "Mobile Food Vendor - 881"},{result: "Warning"}]}
+
+Example: 
+
+Find which students ids are >25 and < 100 in sample_training.grades collection.
+
+{"$and": [{"student_id": {"$gt": 25}},{"student_id": {"$lt": 100}}]}
+
+Better
+
+{"student_id": {"$gt": 25, "$lt": 100}}
+
+
+
+Other way
+
+When you need to include the same operator more than once in a query
+
+Using the routes collection find out how many CR2 and A81 airplanes come through the KZN airport?
+
+{"$or": [{dst_airport: "KZN"},{src_airport:"KZN"}]}
+
+and
+{"$or": [{airplane: "CR2"},{airplane: "A81"}]}
+
+>>Merge this conditions
+
+db.routes.find({ "$and": [ { "$or" :[ { "dst_airport": "KZN" },
+                                    { "src_airport": "KZN" }
+                                  ] },
+                          { "$or" :[ { "airplane": "CR2" },
+                                     { "airplane": "A81" } ] }
+                         ]}).pretty()
+                         
+>>Logic operators allow us to be more granular in our search for data.
+
+Syntax
+	{"$<operator>": [{<clause1>},{<clause2>},...]}
+	
+Syntax for $not:
+
+	{$not: {<clause>}}
+	
+
+
+
+
+
