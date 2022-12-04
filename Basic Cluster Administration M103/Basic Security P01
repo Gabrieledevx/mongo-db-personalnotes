@@ -1,0 +1,104 @@
+>Target: MongoDB Cluster Administration
+
+
+>>Topic: Basic Security
+
+MongoDB Security is built around the process of authenticationDatabase
+
+-Authentication
+Verifies the identify of a user
+Answer to check it: 
+Who are you?
+
+
+Authentication
+Verifies the privileges of a user
+Answer to check it:
+What do you have access to?
+
+MongoDB has two basics security levels
+
+In Enterprise and community We have two levels:
+
+Community:
+
+SCRAM: It's the basic authentication mechanism.
+Must use a  strong password.
+
+X.509: Uses an X.509 certificate.
+
+Enterprise:
+
+LDAP: Similar to Active Directory on Windows Server to grant access to services or users.
+
+KERBEROS: Developed by MIT (We learn more about it at: 
+Spa: https://www.tarlogic.com/es/blog/como-funciona-kerberos/ 
+
+ENG: https://learn.microsoft.com/en-us/windows-server/security/kerberos/kerberos-authentication-overview
+
+)
+
+ADD: Clusters use an handshake to check security.
+
+
+Authorization: Role Bases Access Control
+
+Each user has one or more roles
+Each role has one or more privileges
+A privilege represents a group of actions and the resources those actions apply to 
+
+Roles support a high level of resposabiliity isolation for operational tasks:
+
+DBA: {Create user, Create index}
+
+Developer: {Write Data,Read Data}
+
+Data Scientist: {Read Data }
+
+At the very minimum, you should *always* configure SCRAM-SHA-1 with a single administrative user protected by a strong password.
+
+
+Commands to check this out
+
+
+Print configuration file:
+
+
+
+cat /etc/mongod.conf
+Launch standalone mongod:
+
+
+
+mongod -f /etc/mongod.conf
+Connect to mongod:
+
+
+
+mongo --host 127.0.0.1:27017
+Create new user with the root role (also, named root):
+
+
+
+use admin
+db.createUser({
+  user: "root",
+  pwd: "root123",
+  roles : [ "root" ]
+})
+Connect to mongod and authenticate as root:
+
+
+
+mongo --username root --password root123 --authenticationDatabase admin
+Run DB stats:
+
+
+
+db.stats()
+Shutdown the server:
+
+
+
+use admin
+db.shutdownServer()
