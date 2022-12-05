@@ -1,0 +1,122 @@
+Theme: MongoDB Cluster
+
+Target: Process Log
+
+
+> CONTEXT ABOUT PROCESS LOG <
+
+ACCESS: Messages related to access control such as authentication.
+
+COMMAND: Messages related to database commands.
+
+CONTROL: Messages related to control activities, such as initialization.
+
+FTDC: Messages related to the diagnostic data collection mechanism.
+
+GEO: Messages related to the parsing geospatial shapes.
+
+INDEX: Messages related to indexing operations.
+
+NETWORK: Messages related to network activities, such as accepting connections.
+
+QUERY: Messages related to queries, including query planner activities.
+
+REPL: Messages related to replica sets, such as initial sync or hearbeats.(1) 
+
+REPL_HB : Messages related to replica sets hearbeats.
+
+ROLLBACK: Messages related to rollback operations.
+
+SHARDING: Messages related to sharding operations.
+
+STORAGE: Messages related to storage activities.
+
+JOURNAL: Messages related to journaling activities. 
+
+WRITE: Messages related to write operations, such as update commands.
+
+
+(1) - What about heartbeats?
+Heartbeat is the process that identifies the current status of a MongoDB node in a replica set. There, the replica set nodes send pings to each other every two seconds (hence the name).
+
+
+
+Log verbosity levels.
+
+-1: Inherit from parent
+0:  Default verbosity, to include informational messages
+1-5: Increases the verbosity level to include Debug Messages.
+
+Log Message Severity levels
+
+F: Fatal
+E: Error
+W: Warning
+I: Informational(verbosity level 0)
+D: Debug(verbosity Level 1-5)
+
+
+Dissecting the log message. 
+
+
+This is the structure for a message log:
+
+Timestamp + Log severity level, verbosity level + Log Component + [connection]
+command xxx.$xxx appName: "The client" + 
+
+The entire skeleton was provided information about the command executed  + operation metadata (numYields: x reslen: xxx locks:{} protocol:op_msg 0ms)
+
+
+
+Recap: 
+
+MongoDB process log supports multiple components for controlling granularity of events captured.
+
+You can retrieve the log from the mongo shell or using command line utilities like tail 
+
+You can change the verbosity of any log component from the mongo shell. 
+
+
+
+Lecture commmands
+
+Get the logging components:
+mongo admin --host 192.168.103.100:27000 -u m103-admin -p m103-pass --eval '
+  db.getLogComponents()
+'
+Change the logging level:
+
+mongo admin --host 192.168.103.100:27000 -u m103-admin -p m103-pass --eval '
+  db.setLogLevel(0, "index")
+'
+
+View the logs through the Mongo shell:
+
+db.adminCommand({ "getLog": "global" })
+
+
+View the logs through the command line:
+
+tail -f /data/db/mongod.log
+
+Update a document:
+
+
+mongo admin --host 192.168.103.100:27000 -u m103-admin -p m103-pass --eval '
+  db.products.update( { "sku" : 6902667 }, { $set : { "salePrice" : 39.99} } )
+'
+
+
+Look for instructions in the log file with grep:
+
+grep -i 'update' /data/db/mongod.log
+
+
+
+
+
+
+
+
+
+

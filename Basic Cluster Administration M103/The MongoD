@@ -1,0 +1,33 @@
+Theme: MongoDB Cluster
+
+Target: The mongod (Mongo Daemon)
+
+Mongod contains all configurations in the db. These are important to make our database secure, distributed and consist
+
+In a cluster mongod must have running in each server. 
+
+Mongod doesn't allow interact with this directly.
+We need a client to interact with the database.
+Note: Client need to be careful when running a command.
+
+
+Commands: 
+
+>Launch mongod in the first shell:
+
+mongod
+
+>Connect to the Mongo shell in the second shell:
+
+mongo
+
+>To create a new collection
+
+db.createCollection("employees")
+
+
+>Try to connect back to Mongo shell, without specifying a port:
+
+use admin
+db.shutdownServer()
+exit

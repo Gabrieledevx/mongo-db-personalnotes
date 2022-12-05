@@ -1,0 +1,159 @@
+MongoDB provides two logging facilities for tracking activities on your database.
+
+The process log displays activity on the MongoDB instance.
+
+The process log collects activity into one of the following components.
+
+Each of these components has an associated verbosity level.
+
+You can use db.getLogComponents the mongo shell-- to review the currently configured log component verbosity.
+
+Let's take a look.
+
+I'm connected to the MongoDB server using the mongo shell.
+
+I can run db.getLogComponents to retrieve the log components from my current database.
+
+So what does all of this mean?
+
+Starting at the top, the verbosity field is the default verbosity level for the MondoDB server.
+
+Any of the other components can inherit from this field.
+
+See how all of these other components have negative 1 as their verbosity?
+
+Negative 1 means, inherit from parent.
+
+You can see I have a verbosity of 1, so all of my components are inheriting from that.
+
+Log levels 1 through 5.
+
+Just increase the verbosity level to include debug messages.
+
+The higher the number, the more verbose your debug messages are.
+
+Let's just recap that very briefly.
+
+Negative 1 means that the log component inherits its verbosity level from its parent.
+
+By default, your verbosity is typically 0.
+
+That means informational messages only.
+
+I had set my verbosity level to 1 so I could see more debug messages.
+
+A higher verbosity level means more detailed and more frequent debug messages.
+
+If you're not trying to actively identify and resolve an issue, you can leave the verbosity at 0 for a base level of monitoring.
+
+You'll notice that, for some of these log components, there are actually subcomponents as well.
+
+Remember, there were three different components for replication.
+
+You had your standard replication component, and then you had a heartbeats and a rollback component.
+
+You can see all three of them here under the replication parent.
+
+Each one is inheriting.
+
+Heartbeats and rollback both inherit from replication, which, itself, inherits from my top level verbosity field.
+
+Now, how does all this work?
+
+There are two ways that we can look at the logs.
+
+The first is by using the get logs database command here in the mongo shell.
+
+The other is to use a utility, like tail dash f to follow the end of the log.
+
+Let's start with the get logs command.
+
+I'm using db.adminCommand, because getLog has to be run against the admin database.
+
+I'm specifying global to tell getLog to give me all of the log activity.
+
+This is going to return the entire log up to the point we ran this command.
+
+You can see that I have a lot of index activity.
+
+There are several commands in here, including the command I ran when I ran db.getLog.
+
+Looking at this, I actually have a little bit too much index activity.
+
+I don't really need this level of detail.
+
+Let's change the log verbosity for the index component back down to 0.
+
+I'm specifying the verbosity level that I want to change the component to with db.setLogLevel.
+
+The output here is what the log level configuration was.
+
+I can rerun db.getLogComponents to see my updated value of index.
+
+We can see here that I've successfully set the verbosity level of the index logging component to 0.
+
+Let's take another look at the log, this time using tail dash f.
+
+I'm specifying the path to my log file to the tail utility, and I'm specifying the dash f flag to direct tail to follow this log.
+
+That means that I will constantly get updates as there is new activity posted to this file.
+
+Depending on your operating system, there may be different utilities from tail available to you that perform the same basic function.
+
+Let's specifically take a look at this command logging event.
+
+So this is the command that I just identified in the log file.
+
+Let's start with the timestamp.
+
+This lets us know when the event occurred.
+
+Next, I have the severity level of the message.
+
+Briefly, there are five types of severity levels.
+
+You have fatal, error, warning, informational, which is related to verbosity level 0, and debug, which is related to verbosity level 1 through 5.
+
+This component has a verbosity level of I, which means that this is an informational message.
+
+Next, we have the actual log component that the operation falls under.
+
+In this case, the operation is a command.
+
+We can also see the connection that the event occurred on.
+
+Connections are incremented and unique, so any events initiated by a specific connection are likely from the same client.
+
+We have more specific information on the event.
+
+We have a command action that was executed on the admin database.
+
+The $cmd indicates that this was a database command.
+
+The full list of possible events and descriptors are out of scope.
+
+But in general, you can expect that what immediately follows the connection to be the operation that triggered the event.
+
+appName indicates what client initiated the operation-- in this case, the mongo shell.
+
+Now we can dig into the command itself.
+
+The entire document is the skeleton of the command executed.
+
+Under the hood, we have a set parameter command that sets the log component verbosity of the index log component on the admin database.
+
+The command was spawned by me using the db.setLogLevel method.
+
+Finally, we have some metadata related to how the operation performed.
+
+The last data point is of particular interest.
+
+It's how long this operation took to complete.
+
+We will talk in another lesson about slow operations and how to identify them.
+
+The MongoDB process log supports multiple components for controlling granularity of events captured.
+
+You can retrieve the log from the mongo shell, or by using command line utilities, like tail.
+
+Finally, you can change the verbosity of any log component using the mongo shell.

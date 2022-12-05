@@ -1,0 +1,24 @@
+Theme: MongoDB Cluster
+
+Target: File Structure on Standalone servers
+
+On WiredTiger, the default journal commit interval is 100 milliseconds.
+
+Lecture Instructions
+
+List --dbpath directory:
+
+ls -l /data/db
+
+List diagnostics data directory:
+
+ls -l /data/db/diagnostic.data
+
+List journal directory:
+
+ls -l /data/db/journal
+
+List socket file:
+
+ls /tmp/mongodb-27017.sock
+

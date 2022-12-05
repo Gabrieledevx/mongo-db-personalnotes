@@ -1,0 +1,33 @@
+Theme: MongoDB Cluster
+
+Target: DB Command vs Shell Helper
+
+
+Database Command
+
+db.runCommand(
+   {
+	"createIndexes": "<collection>",
+	"indexes" : [
+	{
+	   key: {"product":1}
+	},
+	"name": "name_index"
+	]
+
+   }
+)
+
+
+
+Database command it's more large than shell helper
+
+
+Shell helper provides a shortcut for methods.
+Example:
+
+We are following the same command in this case.
+
+db.<collection>.createIndex({"product":1},{"name":"name_index"})
+
+It's more quickly 
