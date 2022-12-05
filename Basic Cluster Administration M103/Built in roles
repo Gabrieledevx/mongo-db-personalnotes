@@ -1,0 +1,152 @@
+>Target: MongoDB Cluster Administration
+
+
+>>Topic: Built in roles
+
+How role based access control (RBAC) works
+
+-Roles in MongoDB
+{
+Role Based Access control
+Database users are granted roles 
+Custom Roles 
+    Tailored roles to attend specific need of sets of users
+Cover in M310 course
+}
+
+
+Built in roles
+    Pre-packaged MongoDB roles
+Role Structure
+    Privileges 
+    Action + resource
+
+*ROLE STRUCTURE*
+
+Role is composed of:
+    Set of privileges:
+     Actions-Resources
+
+Resources:
+    Database 
+    Collection
+    Set of collections
+    Cluster:
+        Replica Set
+        Shard cluster
+
+Commands
+//specific database and collection 
+{db: "products", collection: "inventory"}
+
+//all database and all collections
+{db: "", collection: ""}
+
+//any database and specific collection
+{db: "products", collection: "accounts"}
+
+//specific database any collection
+{db: "products", collection: ""}
+
+// or cluster resource
+{cluster: true}
+
+
+PRIVILEGE
+Resource
+Actions allowed over a resource
+
+//allow to shutdown over the cluster
+
+{resource: {cluster: true}, actions: ["shutdown"]}
+
+Role Structure
+
+Role is composed of 
+    -Set of privileges
+        Actions > Resources
+    -Network authentication restrictions
+    - clientSource
+    - serverAddress
+
+Built-in Roles
+
+>Database User (read, readwrite) {readAnyDatabase, readWriteAnyDatabase} 
+>Database Administration (dbAdmin, userAdmin, dbOwner){dbAdminAnyDatabase, userAdminAnyDatabase}
+>Cluster Administration (clusterAdmin,clusterManager, >clusterMonitor, hostManager)
+>Backup/Restore (backup,restore)
+>Super User(root)
+
+>userAdmin 
+
+changeCustomData
+changePassword
+createRole
+creteUser
+dropRole
+dropUser
+grantRole
+revokeRole
+setAuthenticationRestriction
+viewRole
+viewUser
+
+>dbAdmin
+
+collstats
+dbhash
+dbstats
+killCursors
+listIndexes
+listCollections
+...
+bypassDocumentValidation
+collmod
+collStats
+compact
+convertToCapped
+... and more
+
+>dbOwner
+The database owner can perfom any administrative action on the database.
+This role combines the privileges granted by the readWrite, dbAdmin and userAdmin roles.
+
+
+How roles are defined
+-Privileges
+-Resources
+-Actions
+List of Built-In Roles
+How to create users using a Built-in Role
+
+Commads
+
+Authenticate as root user:
+
+mongo admin -u root -p root123
+
+Create security officer:
+
+db.createUser(
+  { user: "security_officer",
+    pwd: "h3ll0th3r3",
+    roles: [ { db: "admin", role: "userAdmin" } ]
+  }
+)
+
+Create database administrator:
+
+db.createUser(
+  { user: "dba",
+    pwd: "c1lynd3rs",
+    roles: [ { db: "admin", role: "dbAdmin" } ]
+  }
+)
+
+Grant role to user:
+
+db.grantRolesToUser( "dba",  [ { db: "playground", role: "dbOwner"  } ] )
+
+Show role privileges:
+
+db.runCommand( { rolesInfo: { role: "dbOwner", db: "playground" }, showPrivileges
