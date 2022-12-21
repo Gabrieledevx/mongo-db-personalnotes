@@ -1,0 +1,11 @@
+How to importing dataset 
+
+mongoimport 
+--authenticationDatabase admin 
+-u "m103-application-user" 
+-p "m103-application-pass" 
+--port 27000 
+--db applicationData 
+--collection products 
+--file /dataset/products.json
+
