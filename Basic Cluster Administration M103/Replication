@@ -1,0 +1,7 @@
+>Target: MongoDB Cluster Administration
+
+
+>>Topic: What is replication
+
+Replication it's a solution to maintain a database with all data it's a asynchronius service, this is called a replica set. 
+Replica set has made by some servers and works automate. 
