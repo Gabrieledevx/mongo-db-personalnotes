@@ -1,0 +1,22 @@
+Theme: MongoDB Cluster
+
+Target: Replication Commands
+
+rs.status()
+    -Reports health on replica set nodes
+    -Uses data from heartbeats
+
+rs.isMaster()
+    -Describes a node's role in the replica set
+    -Shorter output than rs.status()
+
+db.serverStatus()['repl']
+    -Section of the db.serverStatus() output
+    -Similar to the output of rs.isMaster()
+    -Containts rollbacks counter number of that have ocurred on a node
+
+rs.printReplicationInfo()
+    -Only returns oplog data relativo to current node
+    -Contains timestamps for first and last oplog events
+    
+

@@ -1,0 +1,19 @@
+Theme: MongoDB Cluster
+
+Target: Roles
+
+doc: https://www.mongodb.com/docs/manual/core/replica-set-members/
+
+We have these roles of members of replica set:
+
+Primary
+The primary is the only member in the replica set that receives write operations. MongoDB applies write operations on the primary and then records the operations on the primary's oplog. Secondary members replicate this log and apply the operations to their data sets.
+
+
+Secondaries
+A secondary maintains a copy of the primary's data set. To replicate data, a secondary applies operations from the primary's oplog to its own data set in an asynchronous process. [1] A replica set can have one or more secondaries.
+
+
+Arbiter
+In some circumstances (such as when you have a primary and a secondary, but cost constraints prohibit adding another secondary), you may choose to add an arbiter to your replica set. An arbiter participates in elections for primary but an arbiter does not have a copy of the data set and cannot become a primary.
+An arbiter has exactly 1 election vote. By default an arbiter has priority 0
